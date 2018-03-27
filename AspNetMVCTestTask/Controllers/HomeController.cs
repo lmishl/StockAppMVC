@@ -21,5 +21,16 @@ namespace AspNetMVCTestTask.Controllers
             // возвращаем представление
             return View();
         }
+
+
+       
+        [HttpPost]
+        public ActionResult Index(StockExchangeData data)
+        {
+            db.StockExchangeData.Add(data);
+            // сохраняем в бд все изменения
+            db.SaveChanges();
+            return Index();
+        }
     }
 }

@@ -1,35 +1,106 @@
 ﻿@{
     Layout = null;
 }
- 
+
 <!DOCTYPE html>
- 
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Test task</title>
 </head>
 <body>
+
+    <div>
+        <h3>Форма добавления данных</h3>
+        <form method="post" action="">
+            @*<input type="hidden" value="@ViewBag.BookId" name="BookId" />*@
+            <table>
+                <tr>
+                    <td colspan="2">
+                        Показатели Заемщика
+                    </td>
+                    <td>
+                        Валюта
+                    </td>
+                    <td>
+                        ИНДЕКСЫ
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Дата
+                    </td>
+                    <td>
+                        Выручка
+                    </td>
+                    <td>
+                        серебро, руб.
+                    </td>
+                    <td>Индекс ММВБ Last</td>
+                </tr>
+                <tr>
+                <td>
+                    <input type="Date" name="BusinessDay"/>
+                </td>
+                <td>
+                    <input type="text" name="Profit" />
+                </td>
+                <td>
+                    <input type="text" name="SilverPrice" />
+                </td>
+                <td>
+                    <input type="text" name="MoexPrice" />
+                </td>
+                <tr>
+            </table>
+            <input type="submit" value="Отправить" />
+        </form>
+    </div>
+
+
     <div>
         <h3>Test task</h3>
         <table>
-            <tr><td colspan = "2"><p>Показатели Заемщика</p></td>
-                <td><p>Валюта</p></td>
-                <td><p>ИНДЕКСЫ</p></td>
+            <tr>
+                <td colspan="2">
+                    Показатели Заемщика
+                </td>
+                <td>
+                    Валюта
+                </td>
+                <td>
+                    ИНДЕКСЫ
+                </td>
             </tr>
-            <tr><td><p>Дата</p></td>
-                <td><p>Выручка</p></td>
-                <td><p>серебро, руб. </p></td>
-                <td>"Индекс ММВБ Last"</td>
+            <tr>
+                <td>
+                    Дата
+                </td>
+                <td>
+                    Выручка
+                </td>
+                <td>
+                    серебро, руб.
+                </td>
+                <td>Индекс ММВБ Last</td>
             </tr>
             @foreach (var d in ViewBag.Data)
             {
-            <tr>
-                <td><p>@d.BusinessDay.ToShortDateString()</p></td>
-                <td><p>@d.Profit</p></td>
-                <td><p>@d.SilverPrice</p></td>
-                <td><p>@d.MoexPrice</p></td>
-            </tr>
+                <tr>
+                    <td>
+                        @d.BusinessDay.ToShortDateString()
+                    </td>
+                    <td>
+                        @d.Profit
+                    </td>
+                    <td>
+                        @d.SilverPrice
+                    </td>
+                    <td>
+                        @d.MoexPrice
+                    </td>
+                </tr>
             }
         </table>
     </div>
