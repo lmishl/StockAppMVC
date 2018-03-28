@@ -3,9 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Helpers;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace AspNetMVCTestTask.Controllers
@@ -60,25 +63,37 @@ namespace AspNetMVCTestTask.Controllers
         [HttpGet]
         public FileResult Download()
         {
-            string path = Server.MapPath("~/App_Data/Files/excelFile.xlsx");
+            string path = Server.MapPath("~/App_Data/Files/excelFile" + Guid.NewGuid() + ".xls");
 
             Excel.Application excelApp = new Excel.Application { Visible = false };
             var xlWorkBook = excelApp.Workbooks.Add();
 
             var xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.Item[1];
-            xlWorkSheet.Range["A1", "B1"].Value2 = "Показатели Заемщика";
+            xlWorkSheet.Cells[1, 1] = "Показатели Заемщика";
+            xlWorkSheet.Range["A1", "B1"].Merge(); 
             xlWorkSheet.Cells[1, 3] = "Валюта";
             xlWorkSheet.Cells[1, 4] = "Индексы";
             xlWorkSheet.Cells[2, 1] = "Дата";
             xlWorkSheet.Cells[2, 2] = "Выручка";
             xlWorkSheet.Cells[2, 3] = "серебро, руб. ";
             xlWorkSheet.Cells[2, 4] = "Индекс ММВБ Last";
+
+            int row = 3;
+            foreach (var data in db.StockExchangeData)
+            {
+                xlWorkSheet.Cells[row, 1] = data.BusinessDay;
+                xlWorkSheet.Cells[row, 2] = data.Profit;
+                xlWorkSheet.Cells[row, 3] = data.SilverPrice;
+                xlWorkSheet.Cells[row, 4] = data.MoexPrice;
+                row++;
+            }
+
             xlWorkBook.SaveAs(path, Excel.XlFileFormat.xlWorkbookNormal);
             xlWorkBook.Close(true);
             excelApp.Quit();
 
 
-            
+
             // Объект Stream
             FileStream fs = new FileStream(path, FileMode.Open);
             string file_type = "application/excel";
@@ -87,6 +102,7 @@ namespace AspNetMVCTestTask.Controllers
 
         }
 
+      
 
     }
 }
