@@ -7,102 +7,112 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link type="text/css" rel="stylesheet" href="../../Content/Site.css" />
     <title>Test task</title>
 </head>
 <body>
 
     <div>
-        <h3>Форма добавления данных</h3>
+        <h3>Adding new</h3>
         <form method="post" action="">
-            @*<input type="hidden" value="@ViewBag.BookId" name="BookId" />*@
             <table>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="2" class="header1">
                         Показатели Заемщика
                     </td>
-                    <td>
+                    <td class="header1">
                         Валюта
                     </td>
-                    <td>
+                    <td class="header1">
                         ИНДЕКСЫ
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="header2">
                         Дата
                     </td>
-                    <td>
+                    <td class="header2">
                         Выручка
                     </td>
-                    <td>
+                    <td class="header2">
                         серебро, руб.
                     </td>
-                    <td>Индекс ММВБ Last</td>
+                    <td class="header2">
+                        Индекс ММВБ Last
+                    </td>
                 </tr>
                 <tr>
-                <td>
-                    <input type="Date" name="BusinessDay"/>
-                </td>
-                <td>
-                    <input type="text" name="Profit" />
-                </td>
-                <td>
-                    <input type="text" name="SilverPrice" />
-                </td>
-                <td>
-                    <input type="text" name="MoexPrice" />
-                </td>
+                    <td>
+                        <input type="Date" name="BusinessDay" />
+                    </td>
+                    <td>
+                        <input type="text" name="Profit" />
+                    </td>
+                    <td>
+                        <input type="text" name="SilverPrice" />
+                    </td>
+                    <td>
+                        <input type="text" name="MoexPrice" />
+                    </td>
                 <tr>
             </table>
             <input type="submit" value="Отправить" />
         </form>
     </div>
 
+        
+        <img src="/home/MakeChart" />
 
-    <div>
-        <h3>Test task</h3>
-        <table>
+
+<div>
+    <h3>Base</h3>
+    <table id ="tbl">
+        <tr>
+            <td colspan="2" class="header1">
+                Показатели Заемщика
+            </td>
+            <td class="header1">
+                Валюта
+            </td>
+            <td class="header1">
+                ИНДЕКСЫ
+            </td>
+        </tr>
+        <tr>
+            <td class="header2">
+                Дата
+            </td>
+            <td class="header2">
+                Выручка
+            </td>
+            <td class="header2">
+                серебро, руб.
+            </td>
+            <td class="header2">
+                Индекс ММВБ Last
+            </td>
+        </tr>
+        @foreach (var d in ViewBag.Data)
+        {
             <tr>
-                <td colspan="2">
-                    Показатели Заемщика
+                <td>
+                    @d.BusinessDay.ToShortDateString()
                 </td>
                 <td>
-                    Валюта
+                    @d.Profit
                 </td>
                 <td>
-                    ИНДЕКСЫ
+                    @d.SilverPrice
+                </td>
+                <td>
+                    @d.MoexPrice
                 </td>
             </tr>
-            <tr>
-                <td>
-                    Дата
-                </td>
-                <td>
-                    Выручка
-                </td>
-                <td>
-                    серебро, руб.
-                </td>
-                <td>Индекс ММВБ Last</td>
-            </tr>
-            @foreach (var d in ViewBag.Data)
-            {
-                <tr>
-                    <td>
-                        @d.BusinessDay.ToShortDateString()
-                    </td>
-                    <td>
-                        @d.Profit
-                    </td>
-                    <td>
-                        @d.SilverPrice
-                    </td>
-                    <td>
-                        @d.MoexPrice
-                    </td>
-                </tr>
-            }
-        </table>
-    </div>
+        }
+    </table>
+</div>
+<form method="get" action="\home\download">
+    <input type="submit" value="Скачать как Excel" />
+</form>
 </body>
 </html>
