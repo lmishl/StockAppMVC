@@ -94,7 +94,7 @@ namespace AspNetMVCTestTask.Controllers
 
 
 
-            // Объект Stream
+            // Send
             FileStream fs = new FileStream(path, FileMode.Open);
             string file_type = "application/excel";
             string file_name = "excelFile.xls";
@@ -102,7 +102,37 @@ namespace AspNetMVCTestTask.Controllers
 
         }
 
-      
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            //Сохраним файл
+            if (upload != null)
+            {
+                // получаем имя файла
+                var fileName = Path.GetFileName(upload.FileName);
+                // сохраняем файл в папку Uploads 
+                var localPath = Server.MapPath("~/App_Data/Uploads/" + fileName);
+                upload.SaveAs(localPath);
+
+
+                //открываем файл
+                Excel.Application excelApp = new Excel.Application { Visible = false };
+                var wb = excelApp.Workbooks.Open(localPath);
+                var pathToCSV = Server.MapPath("~/App_Data/Files/csvFile" + Guid.NewGuid() + ".csv");
+                wb.SaveAs(pathToCSV, Excel.XlFileFormat.xlCSV);
+                wb.Close();
+                excelApp.Quit();
+
+                var fs = new FileStream(pathToCSV, FileMode.Open);
+                var file_type = "text/csv";
+                var file_name = "csvFile.csv";
+                return File(fs, file_type, file_name);
+
+            }
+
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

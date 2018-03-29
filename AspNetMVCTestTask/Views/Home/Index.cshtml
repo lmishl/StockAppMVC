@@ -112,10 +112,16 @@
     </table>
 </div>
 <form method="get" action="\home\download">
-    <input type="submit" value="Скачать как Excel" />
+    <input type="submit" value="Скачать таблицу как Excel" />
 </form>
+    <br>
 
-
+<h3>Конвертация в CSV</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
 
 
 </body>
